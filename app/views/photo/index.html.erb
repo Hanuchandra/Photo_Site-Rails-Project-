@@ -1,0 +1,42 @@
+<!Doctype html>
+<html lang="en">
+<head>
+  <style>
+    div {
+      background-color: lightblue;
+      width: 500px;
+      border: 10px red;
+      padding: 5px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body bgcolor="#8b4513">
+<center>
+<div> <h1> Photosite's photo page</h1>
+    <h2><strong> <%= @user.first_name %> <%= @user.last_name %></strong>'s photos</h2>
+</div>
+    <br/>
+    <% @photo_i.each do |photo| %>
+        <%= image_tag("/assets/#{photo.file_name}") %>
+      <div>
+        <p> Photo posted on: <%= photo.date_time %> </p>
+
+
+      </div>
+
+      <% @comments_all.where("photo_id=?",photo.id).each do |comment| %>
+          <center>
+            <div>
+
+              <p><strong> Comment: </strong> <%= comment.comment_text %></p>
+              <p> <strong> Posted on: </strong> <%=comment.created_at %></p>
+              <p> <strong> Posted by: </strong> <%= link_to show_user_name(comment.user_id), user_photos_path(comment.user_id) %> </p>
+
+            </div>
+          </center>
+      <% end %>
+        <% end %>
+    </center>
+</body>
+</html>
